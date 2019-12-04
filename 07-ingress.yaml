@@ -1,0 +1,46 @@
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$1
+    kubernetes.io/ingress.class: "nginx"
+  name: epirus
+  namespace: quorum-test
+spec:
+  tls:
+  - secretName: tls-default
+  rules:
+  - host: node1.epirus.local
+    http:
+      paths:
+      - path: /?(.*)
+        backend:
+          serviceName: epirus-web-node1
+          servicePort: 3000
+      - path: /api-node1/?(.*)
+        backend:
+          serviceName: epirus-api-node1
+          servicePort: 8081
+  - host: node2.epirus.local
+    http:
+      paths:
+      - path: /?(.*)
+        backend:
+          serviceName: epirus-web-node2
+          servicePort: 3000
+      - path: /api-node2/?(.*)
+        backend:
+          serviceName: epirus-api-node2
+          servicePort: 8081
+  - host: node3.epirus.local
+    http:
+      paths:
+      - path: /?(.*)
+        backend:
+          serviceName: epirus-web-node3
+          servicePort: 3000
+      - path: /api-node3/?(.*)
+        backend:
+          serviceName: epirus-api-node3
+          servicePort: 8081

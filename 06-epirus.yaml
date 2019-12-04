@@ -1,0 +1,371 @@
+#epirus conntected to node1
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: epirus-web-node1
+  namespace: quorum-test
+spec:
+  strategy:
+    type: RollingUpdate
+  replicas: 1
+  selector:
+    matchLabels:
+      name: epirus-web-node1
+  template:
+    metadata:
+      name:  epirus-web-node1
+      labels:
+        name: epirus-web-node1
+    spec:
+      containers:
+      - name: epirus
+        image: web3labs/epirus-free-web:latest
+        env:
+          - name: API_URL
+            value: /api-node1
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: epirus-api-node1
+  namespace: quorum-test
+spec:
+  strategy:
+    type: RollingUpdate
+  replicas: 1
+  selector:
+    matchLabels:
+      name: epirus-api-node1
+  template:
+    metadata:
+      name:  epirus-api-node1
+      labels:
+        name: epirus-api-node1
+    spec:
+      containers:
+      - name: epirus
+        image: web3labs/epirus-free-api:latest
+        env:
+          - name: ENABLE_PRIVATE_QUORUM
+            value: enabled
+          - name: NODE_ENDPOINT
+            value: http://quorum-node1:8546
+          - name: MONGO_CLIENT_URI
+            value: mongodb://mongodb-node1:27017
+          - name: MONGO_DB_NAME
+            value: epirus
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: epirus-mongo-node1
+  namespace: quorum-test
+spec:
+  strategy:
+    type: RollingUpdate
+  replicas: 1
+  selector:
+    matchLabels:
+      name: epirus-mongo-node1
+  template:
+    metadata:
+      name:  epirus-mongo-node1
+      labels:
+        name: epirus-mongo-node1
+    spec:
+      containers:
+      - name: epirus-mongo
+        image: mongo:latest
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: epirus-web-node1
+  namespace: quorum-test
+spec:
+  selector:
+   name: epirus-web-node1
+  type: NodePort
+  ports:
+    - name: epirus-web
+      protocol: TCP
+      port: 3000
+      targetPort: 3000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: epirus-api-node1
+  namespace: quorum-test
+spec:
+  selector:
+    name: epirus-api-node1
+  type: NodePort
+  ports:
+    - name: epirus-api
+      protocol: TCP
+      port: 8081
+      targetPort: 8081
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongodb-node1
+  namespace: quorum-test
+spec:
+  selector:
+    name: epirus-mongo-node1
+  type: ClusterIP
+  ports:
+    - name: epirus-mongo
+      protocol: TCP
+      port: 27017
+      targetPort: 27017
+---
+#epirus conntected to node2
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: epirus-web-node2
+  namespace: quorum-test
+spec:
+  strategy:
+    type: RollingUpdate
+  replicas: 1
+  selector:
+    matchLabels:
+      name: epirus-web-node2
+  template:
+    metadata:
+      name:  epirus-web-node2
+      labels:
+        name: epirus-web-node2
+    spec:
+      containers:
+      - name: epirus
+        image: web3labs/epirus-free-web:latest
+        env:
+          - name: API_URL
+            value: /api-node2
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: epirus-api-node2
+  namespace: quorum-test
+spec:
+  strategy:
+    type: RollingUpdate
+  replicas: 1
+  selector:
+    matchLabels:
+      name: epirus-api-node2
+  template:
+    metadata:
+      name:  epirus-api-node2
+      labels:
+        name: epirus-api-node2
+    spec:
+      containers:
+      - name: epirus
+        image: web3labs/epirus-free-api:latest
+        env:
+          - name: ENABLE_PRIVATE_QUORUM
+            value: enabled
+          - name: NODE_ENDPOINT
+            value: http://quorum-node2:8546
+          - name: MONGO_CLIENT_URI
+            value: mongodb://mongodb-node2:27017
+          - name: MONGO_DB_NAME
+            value: epirus
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: epirus-mongo-node2
+  namespace: quorum-test
+spec:
+  strategy:
+    type: RollingUpdate
+  replicas: 1
+  selector:
+    matchLabels:
+      name: epirus-mongo-node2
+  template:
+    metadata:
+      name:  epirus-mongo-node2
+      labels:
+        name: epirus-mongo-node2
+    spec:
+      containers:
+      - name: epirus-mongo
+        image: mongo:latest
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: epirus-web-node2
+  namespace: quorum-test
+spec:
+  selector:
+   name: epirus-web-node2
+  type: NodePort
+  ports:
+    - name: epirus-web
+      protocol: TCP
+      port: 3000
+      targetPort: 3000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: epirus-api-node2
+  namespace: quorum-test
+spec:
+  selector:
+    name: epirus-api-node2
+  type: NodePort
+  ports:
+    - name: epirus-api
+      protocol: TCP
+      port: 8081
+      targetPort: 8081
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongodb-node2
+  namespace: quorum-test
+spec:
+  selector:
+    name: epirus-mongo-node2
+  type: ClusterIP
+  ports:
+    - name: epirus-mongo
+      protocol: TCP
+      port: 27017
+      targetPort: 27017
+---
+#epirus conntected to node3
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: epirus-web-node3
+  namespace: quorum-test
+spec:
+  strategy:
+    type: RollingUpdate
+  replicas: 1
+  selector:
+    matchLabels:
+      name: epirus-web-node3
+  template:
+    metadata:
+      name:  epirus-web-node3
+      labels:
+        name: epirus-web-node3
+    spec:
+      containers:
+      - name: epirus
+        image: web3labs/epirus-free-web:latest
+        env:
+          - name: API_URL
+            value: /api-node3
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: epirus-api-node3
+  namespace: quorum-test
+spec:
+  strategy:
+    type: RollingUpdate
+  replicas: 1
+  selector:
+    matchLabels:
+      name: epirus-api-node3
+  template:
+    metadata:
+      name:  epirus-api-node3
+      labels:
+        name: epirus-api-node3
+    spec:
+      containers:
+      - name: epirus
+        image: web3labs/epirus-free-api:latest
+        env:
+          - name: ENABLE_PRIVATE_QUORUM
+            value: enabled
+          - name: NODE_ENDPOINT
+            value: http://quorum-node3:8546
+          - name: MONGO_CLIENT_URI
+            value: mongodb://mongodb-node3:27017
+          - name: MONGO_DB_NAME
+            value: epirus
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: epirus-mongo-node3
+  namespace: quorum-test
+spec:
+  strategy:
+    type: RollingUpdate
+  replicas: 1
+  selector:
+    matchLabels:
+      name: epirus-mongo-node3
+  template:
+    metadata:
+      name:  epirus-mongo-node3
+      labels:
+        name: epirus-mongo-node3
+    spec:
+      containers:
+      - name: epirus-mongo
+        image: mongo:latest
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: epirus-web-node3
+  namespace: quorum-test
+spec:
+  selector:
+   name: epirus-web-node3
+  type: NodePort
+  ports:
+    - name: epirus-web
+      protocol: TCP
+      port: 3000
+      targetPort: 3000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: epirus-api-node3
+  namespace: quorum-test
+spec:
+  selector:
+    name: epirus-api-node3
+  type: NodePort
+  ports:
+    - name: epirus-api
+      protocol: TCP
+      port: 8081
+      targetPort: 8081
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongodb-node3
+  namespace: quorum-test
+spec:
+  selector:
+    name: epirus-mongo-node3
+  type: ClusterIP
+  ports:
+    - name: epirus-mongo
+      protocol: TCP
+      port: 27017
+      targetPort: 27017
