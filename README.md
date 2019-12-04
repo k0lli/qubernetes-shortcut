@@ -1,6 +1,6 @@
 ## Qubernetes Shortcut
 A project for deploying [Quorum](https://github.com/jpmorganchase/quorum) on [Kubernetes](https://github.com/kubernetes/kubernetes).
-The project deploys three Quorum-Nodes in one single Kubernetes-Cluster. The yaml files were be created with the help of [Qubernetes](https://github.com/jpmorganchase/qubernetes). In addition the project deploys three Epirus-Blockchain-Explorers, one for each node. Therewith you are able to investigate blocks, transactions, contracts on each quorum node. The project helps you to quickly start with your local quorum network. Caution, the project is only for developer environments, not productiv environments!
+The project deploys three Quorum-Nodes in one single Kubernetes-Cluster inclusive Quorum’s Transaction Manager tessera. The yaml files were be created with the help of [Qubernetes](https://github.com/jpmorganchase/qubernetes). In addition the project deploys three Epirus-Blockchain-Explorers, one for each node. Therewith you are able to investigate blocks, transactions, contracts on each quorum node. The project helps you to quickly start with your local quorum network. Caution, the project is only for developer environments, not productiv environments!
 
 ## Quickstart with minikube
 Download and install minikube
