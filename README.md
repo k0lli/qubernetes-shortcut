@@ -9,6 +9,8 @@ Download and install minikube
 ```shell
 $> minikube start --memory=8192 --cpus=2 --disk-size="50g"
 $> kubectl apply -f ./
+$> kubectl config set-context $(kubectl config current-context) --namespace=quorum-test
+$> kubectl get pods
 $> kubectl logs -f epirus-web-node[n]-xxxxxxxxx-xxxxx
 ```
 
