@@ -85,7 +85,7 @@ metadata:
 spec:
   selector:
    name: epirus-web-node1
-  type: NodePort
+  type: ClusterIP
   ports:
     - name: epirus-web
       protocol: TCP
@@ -100,7 +100,7 @@ metadata:
 spec:
   selector:
     name: epirus-api-node1
-  type: NodePort
+  type: ClusterIP
   ports:
     - name: epirus-api
       protocol: TCP
@@ -209,7 +209,7 @@ metadata:
 spec:
   selector:
    name: epirus-web-node2
-  type: NodePort
+  type: ClusterIP
   ports:
     - name: epirus-web
       protocol: TCP
@@ -224,7 +224,7 @@ metadata:
 spec:
   selector:
     name: epirus-api-node2
-  type: NodePort
+  type: ClusterIP
   ports:
     - name: epirus-api
       protocol: TCP
@@ -333,7 +333,7 @@ metadata:
 spec:
   selector:
    name: epirus-web-node3
-  type: NodePort
+  type: ClusterIP
   ports:
     - name: epirus-web
       protocol: TCP
@@ -348,7 +348,7 @@ metadata:
 spec:
   selector:
     name: epirus-api-node3
-  type: NodePort
+  type: ClusterIP
   ports:
     - name: epirus-api
       protocol: TCP
